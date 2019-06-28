@@ -1,2 +1,5 @@
 *.pyc
+steam/
+libsteam_api.so
+SteamworksPy.so
 *.dll

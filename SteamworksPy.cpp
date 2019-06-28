@@ -537,6 +537,15 @@ SW_PY bool StoreStats(){
 	}
 	return SteamUserStats()->StoreStats();
 }
+SW_PY int GetNumAchievements(){
+    if(SteamUser() == NULL){
+        return 0;
+    }
+    return SteamUserStats()->GetNumAchievements();
+}
+SW_PY const char* GetAchievementName(int index){
+    return SteamUserStats()->GetAchievementName(index);
+}
 //SW_PY const char* GetLeaderboardName()
 //SW_PY int GetLeaderboardEntryCount()
 //SW_PY void DownloadLeaderboardEntries()
