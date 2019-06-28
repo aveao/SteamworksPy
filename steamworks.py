@@ -2,7 +2,8 @@
 # Steamworks For Python
 #================================================
 from ctypes import *
-import sys, os
+import sys
+import os
 #------------------------------------------------
 # User Status
 #------------------------------------------------
@@ -19,7 +20,7 @@ FriendFlags = {  # regular friend
     'IgnoredFriend': 0x400,
     'Suggested': 0x800,
     'All': 0xFFFF,
-    }
+}
 #------------------------------------------------
 # Workshop File Types
 #------------------------------------------------
@@ -91,7 +92,7 @@ class Steam:
             print("INFO: Steam is running")
         else:
             print("ERROR: Steam is not running")
-        # Boot up the Steam API 
+        # Boot up the Steam API
         if Steam.cdll.SteamInit() == 1:
             print("INFO: Steamworks initialized!")
         else:
@@ -103,6 +104,8 @@ class Steam:
         Steam.cdll.HasOtherApp.restype = bool
         Steam.cdll.GetDlcCount.restype = int
         Steam.cdll.IsDlcInstalled.restype = bool
+        Steam.cdll.IsSubscribed.restype = bool
+        Steam.cdll.IsSubscribedApp.restype = bool
         Steam.cdll.RequestAppProofOfPurchaseKey.restype = c_char_p
         Steam.cdll.IsAppInstalled.restype = bool
         Steam.cdll.GetCurrentGameLanguage.restype = c_char_p
@@ -157,6 +160,7 @@ class Steam:
         # Set restype for User Statistic functions
         Steam.cdll.GetAchievement.restype = bool
         Steam.cdll.GetAchievementName.restype = c_char_p
+        Steam.cdll.GetAchievementDisplayAttribute.restype = c_char_p
         Steam.cdll.GetNumAchievements.restype = c_uint64
         Steam.cdll.GetStatInt.restype = int
         Steam.cdll.GetStatFloat.restype = c_float
@@ -262,6 +266,20 @@ class SteamApps:
     def IsDlcInstalled(appID):
         if Steam.isSteamLoaded():
             return Steam.cdll.IsDlcInstalled(appID)
+        else:
+            return False
+    # Check if user is subscribed to this app
+    @staticmethod
+    def IsSubscribed():
+        if Steam.isSteamLoaded():
+            return Steam.cdll.IsSubscribed()
+        else:
+            return False
+    # Check if user is subscribed to a given appid
+    @staticmethod
+    def IsSubscribedApp(appID):
+        if Steam.isSteamLoaded():
+            return Steam.cdll.IsSubscribedApp(appID)
         else:
             return False
     # Returns purchase key for given application/game
@@ -605,6 +623,13 @@ class SteamUserStats:
     def GetAchievementName(index):
         if Steam.isSteamLoaded():
             return Steam.cdll.GetAchievementName(index)
+        else:
+            return False
+    # Get achievement display attribute
+    @staticmethod
+    def GetAchievementDisplayAttribute(name, key):
+        if Steam.isSteamLoaded():
+            return Steam.cdll.GetAchievementDisplayAttribute(name, key)
         else:
             return False
 

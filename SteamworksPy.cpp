@@ -216,10 +216,22 @@ SW_PY int GetDlcCount(){
 	return SteamApps()->GetDLCCount();
 }
 SW_PY bool IsDlcInstalled(int32 value){
-	if(SteamApps() == NULL){
-		return false;
-	}
-	return SteamApps()->BIsDlcInstalled(value);
+    if(SteamApps() == NULL){
+        return false;
+    }
+    return SteamApps()->BIsDlcInstalled(value);
+}
+SW_PY bool IsSubscribed(){
+    if(SteamApps() == NULL){
+        return false;
+    }
+    return SteamApps()->BIsSubscribed();
+}
+SW_PY bool IsSubscribedApp(int32 value){
+    if(SteamApps() == NULL){
+        return false;
+    }
+    return SteamApps()->BIsSubscribedApp(value);
 }
 SW_PY void RequestAppProofOfPurchaseKey(int32 value){
 	if(SteamApps() == NULL){
@@ -234,10 +246,10 @@ SW_PY bool IsAppInstalled(int32 value){
 	return SteamApps()->BIsAppInstalled((AppId_t)value);
 }
 SW_PY const char* GetCurrentGameLanguage(){
-	if(SteamApps() == NULL){
-		return "None";
-	}
-	return SteamApps()->GetCurrentGameLanguage();
+    if(SteamApps() == NULL){
+        return "None";
+    }
+    return SteamApps()->GetCurrentGameLanguage();
 }
 //-----------------------------------------------
 // Steam Friends
@@ -545,6 +557,9 @@ SW_PY int GetNumAchievements(){
 }
 SW_PY const char* GetAchievementName(int index){
     return SteamUserStats()->GetAchievementName(index);
+}
+SW_PY const char* GetAchievementDisplayAttribute(const char* name, const char* key){
+    return SteamUserStats()->GetAchievementDisplayAttribute(name, key);
 }
 //SW_PY const char* GetLeaderboardName()
 //SW_PY int GetLeaderboardEntryCount()
